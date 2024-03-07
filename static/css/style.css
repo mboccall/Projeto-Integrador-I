@@ -1,0 +1,22 @@
+* {
+  padding: 0;
+  margin: 0;
+  vertical-align: baseline;
+  list-style: none;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.navbar-brand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-item{
+    padding: 8px 16px;
+}
+.section {
+  background-color: rgb(255, 105, 0);
+  padding: 50px 0;
+}
