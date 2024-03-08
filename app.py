@@ -45,6 +45,16 @@ def cadastrar_cliente():
     return "Cliente cadastrado com sucesso!"
 
 
+@app.route('/consultar_clientes')
+def consultar_clientes():
+    conn = sqlite3.connect('clientes.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM clientes')
+    clientes = cursor.fetchall()
+    conn.close()
+    return render_template('resultados.html', clientes=clientes)
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
