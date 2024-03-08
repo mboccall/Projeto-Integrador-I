@@ -87,8 +87,8 @@
                             id="nome"
                             name="nome"
                             required
-                            pattern="[A-Za-zÀ-ú\s]{3,}"
-                            title="Insira pelo menos 3 letras no nome"
+                            pattern="^[A-Za-zÀ-ú\s']{3,}$"
+                            title="Insira apenas letras e apóstrofos no nome (mínimo 3 caracteres)"
                         />
                         <div class="error-message"></div>
                     </div>
@@ -104,8 +104,8 @@
                             id="sobrenome"
                             name="sobrenome"
                             required
-                            pattern="[A-Za-zÀ-ú\s]{3,}"
-                            title="Insira pelo menos 3 letras no sobrenome"
+                            pattern="^[A-Za-zÀ-ú\s']{3,}$"
+                            title="Insira apenas letras e apóstrofos no sobrenome (mínimo 3 caracteres)"
                         />
                         <div class="error-message"></div>
                     </div>
@@ -121,6 +121,8 @@
                     id="email"
                     name="email"
                     required
+                    pattern="^[^%]+$"
+                    title="Insira um endereço de e-mail válido"
                 />
             </div>
             <div class="mb-3">
@@ -205,20 +207,20 @@
             let valid = true;
 
             // Validação do nome
-            if (!/^[A-Za-zÀ-ú\s]{3,}$/.test(nome.value)) {
+            if (!/^[A-Za-zÀ-ú\s']{3,}$/.test(nome.value)) {
                 valid = false;
                 nome.nextElementSibling.innerText =
-                    "Nome muito curto verifique para continuar, deve conter pelo menos 3 letras.";
+                    "Insira pelo menos 3 letras no nome";
                 event.preventDefault();
             } else {
                 nome.nextElementSibling.innerText = "";
             }
 
             // Validação do sobrenome
-            if (!/^[A-Za-zÀ-ú\s]{3,}$/.test(sobrenome.value)) {
+            if (!/^[A-Za-zÀ-ú\s']{3,}$/.test(sobrenome.value)) {
                 valid = false;
                 sobrenome.nextElementSibling.innerText =
-                    "Sobrenome muito curto verifique para continuar, deve conter pelo menos 3 letras.";
+                    "Insira pelo menos 3 letras no sobrenome";
                 event.preventDefault();
             } else {
                 sobrenome.nextElementSibling.innerText = "";
