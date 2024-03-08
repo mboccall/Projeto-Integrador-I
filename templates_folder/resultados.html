@@ -13,7 +13,12 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
-    <style></style>
+    <style>
+      /* Adiciona a cor de fundo clara à tabela */
+      .table-light {
+        background-color: #f8f9fa;
+      }
+    </style>
   </head>
   <body>
     <!-- Navbar -->
@@ -64,7 +69,8 @@
     <section class="section">
       <div class="container mb-4">
         <h2 class="text-center text-white mb-4">Resultados da Consulta</h2>
-        <table class="table table-bordered table-striped">
+        <!-- Adiciona a classe table-light à tabela -->
+        <table class="table table-bordered table-striped table-light">
           <thead class="bg-primary text-white">
             <tr>
               <th>ID</th>
