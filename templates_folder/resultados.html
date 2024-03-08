@@ -14,8 +14,8 @@
       href="{{ url_for('static', filename='css/style.css') }}"
     />
     <style>
-      /* Adiciona a cor de fundo clara à tabela */
-      .table-light {
+      /* Define o fundo claro apenas para as células da tabela */
+      .table tbody tr:nth-child(even) {
         background-color: #f8f9fa;
       }
     </style>
@@ -69,8 +69,8 @@
     <section class="section">
       <div class="container mb-4">
         <h2 class="text-center text-white mb-4">Resultados da Consulta</h2>
-        <!-- Adiciona a classe table-light à tabela -->
-        <table class="table table-bordered table-striped table-light">
+        <!-- Adiciona a classe table-striped para listrar as linhas e mantém o cabeçalho azul -->
+        <table class="table table-bordered table-striped">
           <thead class="bg-primary text-white">
             <tr>
               <th>ID</th>
