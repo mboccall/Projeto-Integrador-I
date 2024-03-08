@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados da Consulta</title>
+</head>
+<body>
+    <h1>Resultados da Consulta</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Empresa</th>
+            <th>Status do Checkbox</th>
+        </tr>
+        {% for cliente in clientes %}
+        <tr>
+            <td>{{ cliente[0] }}</td>
+            <td>{{ cliente[1] }}</td>
+            <td>{{ cliente[2] }}</td>
+            <td>{{ cliente[3] }}</td>
+            <td>{{ cliente[4] }}</td>
+            <td>{{ cliente[5] }}</td>
+            <td>{{ cliente[6] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
