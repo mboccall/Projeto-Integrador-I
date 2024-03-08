@@ -131,8 +131,8 @@
               id="celular"
               name="telefone"
               required
-              pattern="[0-9]+"
-              title="Insira apenas números no telefone"
+              pattern="[0-9]{10,}"
+              title="Insira um número de telefone válido"
             />
             <div class="error-message"></div>
           </div>
@@ -219,10 +219,10 @@
           }
 
           // Validação do telefone
-          if (!/^[0-9]+$/.test(celular.value)) {
+          if (!/^[0-9]{10,}$/.test(celular.value)) {
             valid = false;
             celular.nextElementSibling.innerText =
-              "Insira apenas números no telefone";
+              "Insira um número de telefone válido";
             event.preventDefault();
           } else {
             celular.nextElementSibling.innerText = "";
