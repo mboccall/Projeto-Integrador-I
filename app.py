@@ -21,7 +21,7 @@ def criar_tabela():
     conn.commit()
     conn.close()
 
-# Rota para exibir o formulário de cadastro.
+# Rota para exibir o formulário de cadastro...
 
 @app.route("/cadastrar_cliente", methods=["POST"])
 def cadastrar_cliente():
