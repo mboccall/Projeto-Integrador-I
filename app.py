@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 app = Flask(__name__, template_folder='templates_folder')
 
@@ -22,7 +22,6 @@ def criar_tabela():
     conn.close()
 
 # Rota para exibir o formulário de cadastro...
-
 @app.route("/cadastrar_cliente", methods=["POST"])
 def cadastrar_cliente():
     nome = request.form["nome"]
@@ -44,7 +43,6 @@ def cadastrar_cliente():
 
     return "Cliente cadastrado com sucesso!"
 
-
 @app.route('/consultar_clientes')
 def consultar_clientes():
     conn = sqlite3.connect('clientes.db')
@@ -54,6 +52,34 @@ def consultar_clientes():
     conn.close()
     return render_template('resultados.html', clientes=clientes)
 
+@app.route('/editar_cliente/<int:id>', methods=['POST'])
+def editar_cliente(id):
+    nome = request.json["nome"]
+    sobrenome = request.json["sobrenome"]
+    email = request.json["email"]
+    telefone = request.json["telefone"]
+    empresa = request.json["empresa"]
+    checkboxstatus = request.json["checkboxstatus"]
+    
+    conn = sqlite3.connect('clientes.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        UPDATE clientes SET nome=?, sobrenome=?, email=?, telefone=?, empresa=?, checkboxstatus=? WHERE id=?
+    ''', (nome, sobrenome, email, telefone, empresa, checkboxstatus, id))
+    conn.commit()
+    conn.close()
+    
+    # Retornar os dados atualizados para atualizar a tabela via AJAX
+    return jsonify({'nome': nome, 'sobrenome': sobrenome, 'email': email, 'telefone': telefone, 'empresa': empresa, 'checkboxstatus': checkboxstatus})
+
+@app.route('/excluir_cliente/<int:id>', methods=['GET'])
+def excluir_cliente(id):
+    conn = sqlite3.connect('clientes.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM clientes WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    return "Cliente excluído com sucesso!"
 
 @app.route('/')
 def index():
@@ -62,5 +88,3 @@ def index():
 if __name__ == '__main__':
     criar_tabela() # Chama a função para criar a tabela antes de iniciar a aplicação
     app.run(debug=True)
-    
-    

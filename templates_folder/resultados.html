@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -24,6 +23,41 @@
       /* Define o fundo claro apenas para as células abaixo do cabeçalho da tabela */
       .table tbody tr td {
         background-color: #f8f9fa; /* Fundo claro */
+      }
+
+      /* Estilo para a seção principal */
+      .section {
+        min-height: calc(
+          100vh - 156px
+        ); /* Ajusta a altura da seção para ocupar toda a tela menos a altura do navbar */
+      }
+
+      /* Estilo para o footer */
+      footer {
+        background-image: url("{{ url_for("static", filename="img/footer-bg.png") }}");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+      }
+
+      /* Estilo para os campos de entrada durante a edição */
+      .edit-input {
+        width: 100%;
+      }
+
+      /* Estilo para a div flutuante de edição */
+      .edit-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
       }
     </style>
   </head>
@@ -77,40 +111,135 @@
       <div class="container mb-4">
         <h2 class="text-center text-white mb-4">Resultados da Consulta</h2>
         <!-- Adiciona a classe table-striped para listrar as linhas -->
-        <table class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Sobrenome</th>
-              <th>Email</th>
-              <th>Telefone</th>
-              <th>Empresa</th>
-              <th>Status do Checkbox</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for cliente in clientes %}
-            <tr>
-              <td>{{ cliente[0] }}</td>
-              <td>{{ cliente[1] }}</td>
-              <td>{{ cliente[2] }}</td>
-              <td>{{ cliente[3] }}</td>
-              <td>{{ cliente[4] }}</td>
-              <td>{{ cliente[5] }}</td>
-              <td>{{ cliente[6] }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Empresa</th>
+                <th>Status do Checkbox</th>
+                <th>Ação</th>
+                <!-- Nova coluna de Ação -->
+              </tr>
+            </thead>
+            <tbody>
+              {% for cliente in clientes %}
+              <tr id="cliente-{{ cliente[0] }}">
+                <td style="width: 2%; min-width: 2%">{{ cliente[0] }}</td>
+                <td style="width: 12%; min-width: 12%">{{ cliente[1] }}</td>
+                <td style="width: 22%; min-width: 22%">{{ cliente[2] }}</td>
+                <td style="width: 10%; min-width: 10%">{{ cliente[3] }}</td>
+                <td style="width: 10%; min-width: 10%">{{ cliente[4] }}</td>
+                <td style="width: 20%; min-width: 20%">{{ cliente[5] }}</td>
+                <td style="width: 8%; min-width: 8%">{{ cliente[6] }}</td>
+                <td style="width: 23%; min-width: 23%">
+                  <!-- Botões de editar e excluir -->
+                  <button
+                    onclick="editarCliente({{ cliente[0] }})"
+                    class="btn btn-primary"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onclick="excluirCliente({{ cliente[0] }})"
+                    class="btn btn-danger"
+                  >
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
+    <!-- Div flutuante para edição -->
+    <div id="edit-popup" class="edit-popup" style="display: none">
+      <h3>Editar Cliente</h3>
+      <form id="edit-form">
+        <input type="hidden" id="edit-id" />
+        <div class="mb-2">
+          <label for="edit-nome" class="form-label">Nome:</label>
+          <input
+            type="text"
+            id="edit-nome"
+            class="form-control edit-input"
+            required
+            pattern="^[A-Za-zÀ-ú\s']{3,}$"
+            title="Insira apenas letras e apóstrofos no nome (mínimo 3 caracteres)"
+          />
+        </div>
+        <div class="mb-2">
+          <label for="edit-sobrenome" class="form-label">Sobrenome:</label>
+          <input
+            type="text"
+            id="edit-sobrenome"
+            class="form-control edit-input"
+            required
+            pattern="^[A-Za-zÀ-ú\s']{3,}$"
+            title="Insira apenas letras e apóstrofos no sobrenome (mínimo 3 caracteres)"
+          />
+        </div>
+        <div class="mb-2">
+          <label for="edit-email" class="form-label">Email:</label>
+          <input
+            type="email"
+            id="edit-email"
+            class="form-control edit-input"
+            required
+            pattern="^[^%]+$"
+            title="Insira um endereço de e-mail válido"
+          />
+        </div>
+        <div class="mb-2">
+          <label for="edit-telefone" class="form-label">Telefone:</label>
+          <input
+            type="tel"
+            id="edit-telefone"
+            class="form-control edit-input"
+            required
+            title="Insira um número de telefone válido"
+          />
+        </div>
+        <div class="mb-2">
+          <label for="edit-empresa" class="form-label">Empresa:</label>
+          <input
+            type="text"
+            id="edit-empresa"
+            class="form-control edit-input"
+            required
+            minlength="3"
+            title="Insira pelo menos 3 caracteres no nome da empresa"
+          />
+        </div>
+        <div class="mb-2">
+          <label for="edit-checkboxstatus" class="form-label"
+            >Status do Checkbox:</label
+          >
+          <input
+            type="text"
+            id="edit-checkboxstatus"
+            class="form-control edit-input"
+            required
+          />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="button" onclick="fecharPopup()" class="btn btn-secondary">
+          Cancelar
+        </button>
+      </form>
+    </div>
+
     <!-- Footer -->
-    <footer
-      style="background-image: url('{{ url_for('static', filename='img/footer-bg.png') }}'); background-size:cover; background-position: center;"
-    >
-      <div class="container mt-0 pt-4 pb-4" style="max-width: 1200px">
+    <footer>
+      <div class="container">
         <div class="mt-0">
           <div class="">
             <h4 class="" data-type="text" tabindex="0" style="color: white">
@@ -134,5 +263,101 @@
 
     <!-- Bootstrap JS (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript para edição e exclusão de clientes -->
+    <script>
+      function editarCliente(id) {
+        // Preencher os campos da div flutuante com os dados do cliente
+        var row = document.getElementById("cliente-" + id);
+        document.getElementById("edit-id").value = id;
+        document.getElementById("edit-nome").value = row.cells[1].textContent;
+        document.getElementById("edit-sobrenome").value =
+          row.cells[2].textContent;
+        document.getElementById("edit-email").value = row.cells[3].textContent;
+        document.getElementById("edit-telefone").value =
+          row.cells[4].textContent;
+        document.getElementById("edit-empresa").value =
+          row.cells[5].textContent;
+        document.getElementById("edit-checkboxstatus").value =
+          row.cells[6].textContent;
+
+        // Exibir a div flutuante
+        document.getElementById("edit-popup").style.display = "block";
+      }
+
+      function fecharPopup() {
+        // Fechar a div flutuante
+        document.getElementById("edit-popup").style.display = "none";
+      }
+
+      document
+        .getElementById("edit-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          // Coletar os dados do formulário
+          var id = document.getElementById("edit-id").value;
+          var nome = document.getElementById("edit-nome").value;
+          var sobrenome = document.getElementById("edit-sobrenome").value;
+          var email = document.getElementById("edit-email").value;
+          var telefone = document.getElementById("edit-telefone").value;
+          var empresa = document.getElementById("edit-empresa").value;
+          var checkboxstatus = document.getElementById(
+            "edit-checkboxstatus"
+          ).value;
+
+          // Enviar os dados para o servidor via AJAX
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", `/editar_cliente/${id}`, true);
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                // Atualizar a linha da tabela com os novos dados
+                var response = JSON.parse(xhr.responseText);
+                var row = document.getElementById("cliente-" + id);
+                row.cells[1].textContent = response.nome;
+                row.cells[2].textContent = response.sobrenome;
+                row.cells[3].textContent = response.email;
+                row.cells[4].textContent = response.telefone;
+                row.cells[5].textContent = response.empresa;
+                row.cells[6].textContent = response.checkboxstatus;
+                // Fechar a div flutuante
+                fecharPopup();
+              } else {
+                alert("Erro ao salvar edição.");
+              }
+            }
+          };
+          xhr.send(
+            JSON.stringify({
+              nome: nome,
+              sobrenome: sobrenome,
+              email: email,
+              telefone: telefone,
+              empresa: empresa,
+              checkboxstatus: checkboxstatus,
+            })
+          );
+        });
+
+      function excluirCliente(id) {
+        if (confirm("Tem certeza que deseja excluir este cliente?")) {
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", `/excluir_cliente/${id}`, true);
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                // Remover a linha da tabela
+                var row = document.getElementById("cliente-" + id);
+                row.parentNode.removeChild(row);
+              } else {
+                alert("Erro ao excluir cliente.");
+              }
+            }
+          };
+          xhr.send();
+        }
+      }
+    </script>
   </body>
 </html>
