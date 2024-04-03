@@ -10,9 +10,18 @@
 } */
 
 /* Estilo para a seção principal */
-.section {
-    min-height: calc(100vh - 156px);
-    /* Ajusta a altura da seção para ocupar toda a tela menos a altura do navbar */
+@media (max-width: 991px) {
+    .section {
+        min-height: calc(100vh - 99.5px);
+        /* Ajusta a altura da seção para ocupar toda a tela menos a altura do navbar */
+    }
+}
+
+@media (min-width: 992px) {
+    .section {
+        min-height: calc(100vh - 139.5px);
+        /* Ajusta a altura da seção para ocupar toda a tela menos a altura do navbar */
+    }
 }
 
 /* Estilo para o footer
@@ -41,4 +50,9 @@ footer {
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 9999;
+}
+
+.section {
+    background-color: rgb(255, 105, 0);
+    padding: 50px 0;
 }

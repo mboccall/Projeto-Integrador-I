@@ -1,0 +1,24 @@
+@media (max-width: 991px) {
+    .section {
+        min-height: calc(100vh - 99.5px);
+        /* Ajusta a altura da seção para ocupar toda a tela menos a altura do navbar */
+    }
+}
+
+@media (min-width: 992px) {
+    .section {
+        min-height: calc(100vh - 139.5px);
+        /* Ajusta a altura da seção para ocupar toda a tela menos a altura do navbar */
+    }
+}
+
+.section {
+    background-color: rgb(255, 105, 0);
+    padding: 50px 0;
+}
+
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}

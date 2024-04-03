@@ -7,12 +7,13 @@
   {% block links %}
   <!-- intl-tel-input CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='index/css/style.css') }}">
   {% endblock %}
 
   {% block content %}
   <!-- Section com formulário de cadastro -->
   <section class="section">
-    <div class="container" style="height: 100vh;">
+    <div class="container">
       <h2 class="text-center text-white mb-4">Receba uma consultoria</h2>
       <form class="mx-auto" style="max-width: 600px" action="/cadastrar_cliente" method="post" id="cadastroForm">
         <div class="row">
