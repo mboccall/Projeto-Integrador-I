@@ -1,111 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resultados da Consulta</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-    <style>
-      /* Define o fundo azul e texto branco apenas para o cabeçalho da tabela */
-      .table thead {
-        background-color: #007bff; /* Azul */
-        color: white; /* Texto branco */
-      }
+{% extends 'base.html' %}
 
-      /* Define o fundo claro apenas para as células abaixo do cabeçalho da tabela */
-      .table tbody tr td {
-        background-color: #f8f9fa; /* Fundo claro */
-      }
+{% block title %}UpriseHR - Resultados da Consulta{% endblock %}
 
-      /* Estilo para a seção principal */
-      .section {
-        min-height: calc(
-          100vh - 156px
-        ); /* Ajusta a altura da seção para ocupar toda a tela menos a altura do navbar */
-      }
+    {% block links %}
+    <!-- CSS especifico da página -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='resultados/css/style.css') }}"/>
+    {% endblock %}
 
-      /* Estilo para o footer */
-      footer {
-        background-image: url("{{ url_for("static", filename="img/footer-bg.png") }}");
-        background-size: cover;
-        background-position: center;
-        color: white;
-        padding: 20px 0;
-        text-align: center;
-      }
-
-      /* Estilo para os campos de entrada durante a edição */
-      .edit-input {
-        width: 100%;
-      }
-
-      /* Estilo para a div flutuante de edição */
-      .edit-popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        z-index: 9999;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <div class="container mb-3">
-        <a class="navbar-brand mb-4 mt-2" href="#">
-          <img
-            src="{{ url_for('static', filename='img/logo.png') }}"
-            alt="Logo"
-            width="200"
-          />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse justify-content-center mt-0"
-          id="navbarNav"
-        >
-          <ul class="navbar-nav mt-5">
-            <!-- Adicionando margem superior ao menu -->
-            <li class="nav-item">
-              <a class="nav-link" href="#">Início</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">SPAC</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">E-books</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Blog</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
+    {% block content %}
     <!-- Section com resultados da consulta -->
     <section class="section">
       <div class="container mb-4">
@@ -115,14 +17,14 @@
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Sobrenome</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Empresa</th>
-                <th>Status do Checkbox</th>
-                <th>Ação</th>
+                <th class="text-bg-primary">ID</th>
+                <th class="text-bg-primary">Nome</th>
+                <th class="text-bg-primary">Sobrenome</th>
+                <th class="text-bg-primary">Email</th>
+                <th class="text-bg-primary">Telefone</th>
+                <th class="text-bg-primary">Empresa</th>
+                <th class="text-bg-primary">Status do Checkbox</th>
+                <th class="text-bg-primary">Ação</th>
                 <!-- Nova coluna de Ação -->
               </tr>
             </thead>
@@ -138,18 +40,8 @@
                 <td style="width: 8%; min-width: 8%">{{ cliente[6] }}</td>
                 <td style="width: 23%; min-width: 23%">
                   <!-- Botões de editar e excluir -->
-                  <button
-                    onclick="editarCliente({{ cliente[0] }})"
-                    class="btn btn-primary"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onclick="excluirCliente({{ cliente[0] }})"
-                    class="btn btn-danger"
-                  >
-                    Excluir
-                  </button>
+                  <button onclick="editarCliente({{ cliente[0] }})" class="btn btn-primary">Editar</button>
+                  <button onclick="excluirCliente({{ cliente[0] }})" class="btn btn-danger">Excluir</button>
                 </td>
               </tr>
               {% endfor %}
@@ -163,201 +55,39 @@
     <div id="edit-popup" class="edit-popup" style="display: none">
       <h3>Editar Cliente</h3>
       <form id="edit-form">
-        <input type="hidden" id="edit-id" />
+        <input type="hidden" id="edit-id"/>
         <div class="mb-2">
           <label for="edit-nome" class="form-label">Nome:</label>
-          <input
-            type="text"
-            id="edit-nome"
-            class="form-control edit-input"
-            required
-            pattern="^[A-Za-zÀ-ú\s']{3,}$"
-            title="Insira apenas letras e apóstrofos no nome (mínimo 3 caracteres)"
-          />
+          <input type="text" id="edit-nome" class="form-control edit-input" required pattern="^[A-Za-zÀ-ú\s']{3,}$" title="Insira apenas letras e apóstrofos no nome (mínimo 3 caracteres)"/>
         </div>
         <div class="mb-2">
           <label for="edit-sobrenome" class="form-label">Sobrenome:</label>
-          <input
-            type="text"
-            id="edit-sobrenome"
-            class="form-control edit-input"
-            required
-            pattern="^[A-Za-zÀ-ú\s']{3,}$"
-            title="Insira apenas letras e apóstrofos no sobrenome (mínimo 3 caracteres)"
-          />
+          <input type="text" id="edit-sobrenome" class="form-control edit-input" required pattern="^[A-Za-zÀ-ú\s']{3,}$" title="Insira apenas letras e apóstrofos no sobrenome (mínimo 3 caracteres)"/>
         </div>
         <div class="mb-2">
           <label for="edit-email" class="form-label">Email:</label>
-          <input
-            type="email"
-            id="edit-email"
-            class="form-control edit-input"
-            required
-            pattern="^[^%]+$"
-            title="Insira um endereço de e-mail válido"
-          />
+          <input type="email" id="edit-email" class="form-control edit-input" required pattern="^[^%]+$" title="Insira um endereço de e-mail válido"/>
         </div>
         <div class="mb-2">
           <label for="edit-telefone" class="form-label">Telefone:</label>
-          <input
-            type="tel"
-            id="edit-telefone"
-            class="form-control edit-input"
-            required
-            title="Insira um número de telefone válido"
-          />
+          <input type="tel" id="edit-telefone" class="form-control edit-input" required title="Insira um número de telefone válido"/>
         </div>
         <div class="mb-2">
           <label for="edit-empresa" class="form-label">Empresa:</label>
-          <input
-            type="text"
-            id="edit-empresa"
-            class="form-control edit-input"
-            required
-            minlength="3"
-            title="Insira pelo menos 3 caracteres no nome da empresa"
-          />
+          <input type="text" id="edit-empresa" class="form-control edit-input" required minlength="3" title="Insira pelo menos 3 caracteres no nome da empresa"/>
         </div>
         <div class="mb-2">
-          <label for="edit-checkboxstatus" class="form-label"
-            >Status do Checkbox:</label
-          >
-          <input
-            type="text"
-            id="edit-checkboxstatus"
-            class="form-control edit-input"
-            required
-          />
+          <label for="edit-checkboxstatus" class="form-label">Status do Checkbox:</label >
+          <input type="text" id="edit-checkboxstatus" class="form-control edit-input" required/>
         </div>
         <br />
         <button type="submit" class="btn btn-success">Salvar</button>
-        <button type="button" onclick="fecharPopup()" class="btn btn-secondary">
-          Cancelar
-        </button>
+        <button type="button" onclick="fecharPopup()" class="btn btn-secondary">Cancelar</button>
       </form>
     </div>
+    {% endblock %}
 
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        <div class="mt-0">
-          <div class="">
-            <h4 class="" data-type="text" tabindex="0" style="color: white">
-              Endereço<span
-                data-prop="titleAddress"
-                class="ck-editable-element"
-                data-editable="basic"
-                style=""
-              ></span>
-            </h4>
-            <p class="" data-type="address" style="color: white">
-              Praia de Botafogo, 226 - 16 andar<br />
-              Rio de Janeiro, RJ, 22250-040, BR
-            </p>
-
-            <p style="color: white">© 2022 Uprisehr Desenvolvimento Humano</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Bootstrap JS (opcional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
+    {% block scripts %}
     <!-- JavaScript para edição e exclusão de clientes -->
-    <script>
-      function editarCliente(id) {
-        // Preencher os campos da div flutuante com os dados do cliente
-        var row = document.getElementById("cliente-" + id);
-        document.getElementById("edit-id").value = id;
-        document.getElementById("edit-nome").value = row.cells[1].textContent;
-        document.getElementById("edit-sobrenome").value =
-          row.cells[2].textContent;
-        document.getElementById("edit-email").value = row.cells[3].textContent;
-        document.getElementById("edit-telefone").value =
-          row.cells[4].textContent;
-        document.getElementById("edit-empresa").value =
-          row.cells[5].textContent;
-        document.getElementById("edit-checkboxstatus").value =
-          row.cells[6].textContent;
-
-        // Exibir a div flutuante
-        document.getElementById("edit-popup").style.display = "block";
-      }
-
-      function fecharPopup() {
-        // Fechar a div flutuante
-        document.getElementById("edit-popup").style.display = "none";
-      }
-
-      document
-        .getElementById("edit-form")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-          // Coletar os dados do formulário
-          var id = document.getElementById("edit-id").value;
-          var nome = document.getElementById("edit-nome").value;
-          var sobrenome = document.getElementById("edit-sobrenome").value;
-          var email = document.getElementById("edit-email").value;
-          var telefone = document.getElementById("edit-telefone").value;
-          var empresa = document.getElementById("edit-empresa").value;
-          var checkboxstatus = document.getElementById(
-            "edit-checkboxstatus"
-          ).value;
-
-          // Enviar os dados para o servidor via AJAX
-          var xhr = new XMLHttpRequest();
-          xhr.open("POST", `/editar_cliente/${id}`, true);
-          xhr.setRequestHeader("Content-Type", "application/json");
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-              if (xhr.status === 200) {
-                // Atualizar a linha da tabela com os novos dados
-                var response = JSON.parse(xhr.responseText);
-                var row = document.getElementById("cliente-" + id);
-                row.cells[1].textContent = response.nome;
-                row.cells[2].textContent = response.sobrenome;
-                row.cells[3].textContent = response.email;
-                row.cells[4].textContent = response.telefone;
-                row.cells[5].textContent = response.empresa;
-                row.cells[6].textContent = response.checkboxstatus;
-                // Fechar a div flutuante
-                fecharPopup();
-              } else {
-                alert("Erro ao salvar edição.");
-              }
-            }
-          };
-          xhr.send(
-            JSON.stringify({
-              nome: nome,
-              sobrenome: sobrenome,
-              email: email,
-              telefone: telefone,
-              empresa: empresa,
-              checkboxstatus: checkboxstatus,
-            })
-          );
-        });
-
-      function excluirCliente(id) {
-        if (confirm("Tem certeza que deseja excluir este cliente?")) {
-          var xhr = new XMLHttpRequest();
-          xhr.open("GET", `/excluir_cliente/${id}`, true);
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-              if (xhr.status === 200) {
-                // Remover a linha da tabela
-                var row = document.getElementById("cliente-" + id);
-                row.parentNode.removeChild(row);
-              } else {
-                alert("Erro ao excluir cliente.");
-              }
-            }
-          };
-          xhr.send();
-        }
-      }
-    </script>
-  </body>
-</html>
+    <script src="{{ url_for('static', filename='resultados/js/script.js') }}"></script>
+    {% endblock %}

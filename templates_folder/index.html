@@ -1,51 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends 'base.html' %}
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UpriseHR - Receba uma consultoria</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+{%block title%}UpriseHR - Receba uma consultoria{% endblock %}
+
+  {% block links %}
   <!-- intl-tel-input CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-</head>
+  {% endblock %}
 
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary shadow sticky-top">
-    <div class="container d-flex flex-column">
-      <div class="d-flex align-items-center">
-        <a class="navbar-brand" href="https://uprisehr.com.br/"><b
-             style="color: #ff6900; font-size: 3.0625rem;">UpriseHR</b></a>
-        <button class="navbar-toggler ms-auto border-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-      <div>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="https://uprisehr.com.br/">Início</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://uprisehr.com.br/spac">SPAC</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://uprisehr.com.br/e-books">E-books</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://uprisehr.com.br/blog">Blog</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
-
+  {% block content %}
   <!-- Section com formulário de cadastro -->
   <section class="section">
     <div class="container" style="height: 100vh;">
@@ -55,70 +17,44 @@
           <div class="col-md-6">
             <div class="mb-3">
               <label for="nome" class="form-label text-white">Nome</label>
-              <input type="text" class="form-control" id="nome" name="nome" required pattern="^[A-Za-zÀ-ú\s']{3,}$"
-                     title="Insira apenas letras e apóstrofos no nome (mínimo 3 caracteres)" />
+              <input type="text" class="form-control" id="nome" name="nome" required pattern="^[A-Za-zÀ-ú\s']{3,}$" title="Insira apenas letras e apóstrofos no nome (mínimo 3 caracteres)" />
               <div class="error-message"></div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="mb-3">
               <label for="sobrenome" class="form-label text-white">Sobrenome</label>
-              <input type="text" class="form-control" id="sobrenome" name="sobrenome" required
-                     pattern="^[A-Za-zÀ-ú\s']{3,}$"
-                     title="Insira apenas letras e apóstrofos no sobrenome (mínimo 3 caracteres)" />
+              <input type="text" class="form-control" id="sobrenome" name="sobrenome" required pattern="^[A-Za-zÀ-ú\s']{3,}$" title="Insira apenas letras e apóstrofos no sobrenome (mínimo 3 caracteres)" />
               <div class="error-message"></div>
             </div>
           </div>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label text-white">Email Profissional</label>
-          <input type="email" class="form-control" id="email" name="email" required pattern="^[^%]+$"
-                 title="Insira um endereço de e-mail válido" />
+          <input type="email" class="form-control" id="email" name="email" required pattern="^[^%]+$" title="Insira um endereço de e-mail válido" />
         </div>
         <div class="mb-3">
           <label for="celular" class="form-label text-white">Celular</label>
-          <input type="tel" class="form-control" id="celular" name="telefone" required
-                 title="Insira um número de telefone válido" />
+          <input type="tel" class="form-control" id="celular" name="telefone" required title="Insira um número de telefone válido" />
           <div class="error-message"></div>
         </div>
         <div class="mb-3">
           <label for="empresa" class="form-label text-white">Nome da Empresa</label>
-          <input type="text" class="form-control" id="empresa" name="empresa" required minlength="3"
-                 title="Insira pelo menos 3 caracteres no nome da empresa" />
+          <input type="text" class="form-control" id="empresa" name="empresa" required minlength="3" title="Insira pelo menos 3 caracteres no nome da empresa" />
           <div class="error-message"></div>
         </div>
         <div class="form-check mb-3">
           <input type="checkbox" class="form-check-input" id="permitir-contato" name="checkboxstatus" required />
-          <label class="form-check-label text-white" for="permitir-contato">Permito o contato através do E-mail. (Você
-            pode cancelar a
-            qualquer momento)</label>
+          <label class="form-check-label text-white" for="permitir-contato">Permito o contato através do E-mail. (Você pode cancelar a qualquer momento)</label>
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
       </form>
     </div>
   </section>
-  <footer class="end-0 footer-cusutom">
-    <div class="container mt-0 py-4">
-      <div class="mt-0">
-        <div class="">
-          <h4 class="" data-type="text" tabindex="0" style="color: white">
-            Endereço<span data-prop="titleAddress" class="ck-editable-element" data-editable="basic" style=""></span>
-          </h4>
-          <p class="" data-type="address" style="color: white">
-            Praia de Botafogo, 226 - 16 andar<br />
-            Rio de Janeiro, RJ, 22250-040, BR
-          </p>
+  {% endblock %}
 
-          <p style="color: white">© 2022 Uprisehr Desenvolvimento Humano</p>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- Bootstrap JS (opcional) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  {% block scripts%}
   <!-- intl-tel-input JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
-
-</html>
+  <script src="{{ url_for('static', filename='index/js/script.js') }}"></script>
+  {% endblock %}

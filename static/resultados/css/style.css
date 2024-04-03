@@ -1,0 +1,44 @@
+/* Define o fundo azul e texto branco apenas para o cabeçalho da tabela */
+/* .table thead {
+    background-color: #007bff !important;
+    color: white !important;
+} */
+
+/* Define o fundo claro apenas para as células abaixo do cabeçalho da tabela */
+/* .table tbody tr td {
+    background-color: #f8f9fa;
+} */
+
+/* Estilo para a seção principal */
+.section {
+    min-height: calc(100vh - 156px);
+    /* Ajusta a altura da seção para ocupar toda a tela menos a altura do navbar */
+}
+
+/* Estilo para o footer
+footer {
+    background-image: url("{{ url_for(" static", filename=" img/footer-bg.png") }}");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+} */
+
+/* Estilo para os campos de entrada durante a edição */
+.edit-input {
+    width: 100%;
+}
+
+/* Estilo para a div flutuante de edição */
+.edit-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
