@@ -21,6 +21,14 @@ def criar_tabela():
     conn.commit()
     conn.close()
 
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    return render_template('login.html')
+
+@app.route("/register", methods=["POST", "GET"])
+def register():
+    return render_template('register.html')
+
 # Rota para exibir o formulário de cadastro...
 @app.route("/cadastrar_cliente", methods=["POST"])
 def cadastrar_cliente():

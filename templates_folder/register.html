@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Uprise - Registrar{% endblock %}
+
+{% block content %}
+<div class="container col-lg-5">
+    <form action="/login" method="post">
+        <div class="row my-3">
+            <div class="col-6">
+                <label for="name" class="form-label">Nome:</label>
+                <input type="text" class="form-control" placeholder="Digite seu nome." id="name" required>
+            </div>
+            <div class="col-6">
+                <label for="lastname" class="form-label">Sobrenome:</label>
+                <input type="text" class="form-control" placeholder="Digite seu sobrenome." id="lastname" required>
+            </div>
+        </div>
+        <div class="my-3">
+            <label for="email" class="form-label">E-mail:</label>
+            <input type="email" class="form-control" placeholder="Digite seu e-mail." id="email" required>
+        </div>
+        <div class="my-3">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="senha" placeholder="Digite sua senha." required>
+        </div>
+        <div class="my-3">
+            <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
