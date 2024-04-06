@@ -21,6 +21,10 @@ def criar_tabela():
     conn.commit()
     conn.close()
 
+@app.route("/genz", methods=["GET"])
+def landingpage():
+    return render_template('landingpage.html')
+
 @app.route("/login", methods=["POST", "GET"])
 def login():
     return render_template('login.html')
