@@ -1,27 +1,27 @@
-import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__, template_folder='templates_folder')
+db_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'clientes.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
+db = SQLAlchemy(app)
 
-# Função para criar o BD
+class Clientes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100))
+    sobrenome = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    telefone = db.Column(db.String(15))
+    empresa = db.Column(db.String(100))
+    checkboxstatus = db.Column(db.String(10))
+
+# Definindo a função para criar as tabelas dentro do contexto da aplicação Flask
 def criar_tabela():
-    conn = sqlite3.connect('clientes.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS clientes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT,
-            sobrenome TEXT,
-            email TEXT,
-            telefone TEXT,
-            empresa TEXT,
-            checkboxstatus TEXT
-        )
-    ''')
-    conn.commit()
-    conn.close()
+    with app.app_context():
+        db.create_all()
 
-@app.route("/genz", methods=["GET"])
+@app.route("/", methods=["GET"])
 def landingpage():
     return render_template('landingpage.html')
 
@@ -44,56 +44,43 @@ def cadastrar_cliente():
     checkboxstatus = request.form["checkboxstatus"]
     
     # Inserir os dados na tabela do banco de dados
-    conn = sqlite3.connect('clientes.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        INSERT INTO clientes (nome, sobrenome, email, telefone, empresa, checkboxstatus)
-        VALUES (?, ?, ?, ?, ?, ?)
-    ''', (nome, sobrenome, email, telefone, empresa, checkboxstatus))
-    conn.commit()
-    conn.close()
+    novo_cliente = Clientes(nome=nome, sobrenome=sobrenome, email=email, telefone=telefone, empresa=empresa, checkboxstatus=checkboxstatus)
+    db.session.add(novo_cliente)
+    db.session.commit()
 
     return "Cliente cadastrado com sucesso!"
 
 @app.route('/consultar_clientes')
 def consultar_clientes():
-    conn = sqlite3.connect('clientes.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM clientes')
-    clientes = cursor.fetchall()
-    conn.close()
-    return render_template('resultados.html', clientes=clientes)
+    clientes = Clientes.query.all()
+    clientes_info = []
+    for cliente in clientes:
+        cliente_info = [ cliente.id, cliente.nome, cliente.sobrenome, cliente.email, cliente.telefone, cliente.empresa, cliente.checkboxstatus]
+        clientes_info.append(cliente_info)
+    return render_template('resultados.html', clientes=clientes_info)
+
 
 @app.route('/editar_cliente/<int:id>', methods=['POST'])
 def editar_cliente(id):
-    nome = request.json["nome"]
-    sobrenome = request.json["sobrenome"]
-    email = request.json["email"]
-    telefone = request.json["telefone"]
-    empresa = request.json["empresa"]
-    checkboxstatus = request.json["checkboxstatus"]
-    
-    conn = sqlite3.connect('clientes.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        UPDATE clientes SET nome=?, sobrenome=?, email=?, telefone=?, empresa=?, checkboxstatus=? WHERE id=?
-    ''', (nome, sobrenome, email, telefone, empresa, checkboxstatus, id))
-    conn.commit()
-    conn.close()
-    
-    # Retornar os dados atualizados para atualizar a tabela via AJAX
-    return jsonify({'nome': nome, 'sobrenome': sobrenome, 'email': email, 'telefone': telefone, 'empresa': empresa, 'checkboxstatus': checkboxstatus})
+    cliente = Clientes.query.get_or_404(id)
+    cliente.nome = request.json["nome"]
+    cliente.sobrenome = request.json["sobrenome"]
+    cliente.email = request.json["email"]
+    cliente.telefone = request.json["telefone"]
+    cliente.empresa = request.json["empresa"]
+    cliente.checkboxstatus = request.json["checkboxstatus"]
+    db.session.commit()
+
+    return jsonify({'nome': cliente.nome, 'sobrenome': cliente.sobrenome, 'email': cliente.email, 'telefone': cliente.telefone, 'empresa': cliente.empresa, 'checkboxstatus': cliente.checkboxstatus})
 
 @app.route('/excluir_cliente/<int:id>', methods=['GET'])
 def excluir_cliente(id):
-    conn = sqlite3.connect('clientes.db')
-    cursor = conn.cursor()
-    cursor.execute('DELETE FROM clientes WHERE id = ?', (id,))
-    conn.commit()
-    conn.close()
+    cliente = Clientes.query.get_or_404(id)
+    db.session.delete(cliente)
+    db.session.commit()
     return "Cliente excluído com sucesso!"
 
-@app.route('/')
+@app.route('/cadastro')
 def index():
     return render_template('index.html')
 
