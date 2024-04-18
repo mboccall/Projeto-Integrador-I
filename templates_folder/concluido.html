@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Uprise - sucesso{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='concluido/css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="contaier text-center">
+    <h1 class="text-white text-center">Cadastro realizado com sucesso</h1>
+    <p class="text-white h5 my-5">Muito obrigado por se Castrar no treinamento.<br>Logo entraremos em contato!</p>
+    <a href="https://uprisehr.com.br/" class="btn btn-primary">Voltar ao Ínicio!</a>
+</div>
+{% endblock %}

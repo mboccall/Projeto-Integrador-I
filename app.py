@@ -48,7 +48,7 @@ def cadastrar_cliente():
     db.session.add(novo_cliente)
     db.session.commit()
 
-    return "Cliente cadastrado com sucesso!"
+    return redirect(url_for('concluido'))
 
 @app.route('/consultar_clientes')
 def consultar_clientes():
@@ -83,6 +83,10 @@ def excluir_cliente(id):
 @app.route('/cadastro')
 def index():
     return render_template('index.html')
+
+@app.route('/concluido')
+def concluido():
+    return render_template('concluido.html')
 
 if __name__ == '__main__':
     criar_tabela() # Chama a função para criar a tabela antes de iniciar a aplicação
