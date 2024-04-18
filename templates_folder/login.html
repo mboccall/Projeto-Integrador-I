@@ -2,17 +2,21 @@
 
 {% block title %}Uprise - Login{% endblock %}
 
+{% block entrar_ativo %}active{% endblock %}
+
 {% block content %}
 <div class="container col-lg-5">
+    <h3 class="text-center my-5">Entrar</h3>
     <form action="/login" method="post">
         <div class="my-3">
             <label for="email" class="form-label">E-mail:</label>
-            <input type="email" class="form-control" placeholder="Digite seu e-mail." id="email" required>
+            <input type="email" class="form-control" placeholder="Digite seu e-mail." name="email" required>
         </div>
         <div class="my-3">
             <label for="senha" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="senha" placeholder="Digite sua senha." required>
+            <input type="password" class="form-control" name="senha" placeholder="Digite sua senha." required>
         </div>
+        {{ erro|safe }}
         <div class="my-3">
             <button type="submit" class="btn btn-outline-primary">Entrar</button>
         </div>

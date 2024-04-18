@@ -38,12 +38,23 @@
               <a class="nav-link" href="https://uprisehr.com.br/blog">Blog</a>
             </li>
             <li>
-                <a class="nav-link {% block consultoria_ativa %}{% endblock %}" href="/">Consultoria</a>
+                <a class="nav-link {% block consultoria_ativa %}{% endblock %}" href="{{url_for('index')}}">Consultoria</a>
             </li>
-            <!-- Este link é apenas para testar não vai ficar na versão final -->
+            {% if current_user.is_authenticated %}
             <li>
-                <a href="/consultar_clientes" class="nav-link {% block clientes_ativo %}{% endblock %}">Clientes</a>
+                <a href="{{url_for('consultar_clientes')}}" class="nav-link {% block clientes_ativo %}{% endblock %}">Clientes</a>
             </li>
+            <li>
+              <a href="{{url_for('register')}}" class="nav-link {% block cadastrar_ativo %}{% endblock %}">Cadastrar</a>
+            </li>
+            <li>
+              <a href="{{url_for('logout')}}" class="nav-link">Sair</a>
+            </li>
+            {% else %}
+            <li>
+              <a href="{{url_for('login')}}" class="nav-link {% block entrar_ativo %}{% endblock %}">Entrar</a>
+            </li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -63,7 +74,7 @@
             Praia de Botafogo, 226 - 16 andar<br />
             Rio de Janeiro, RJ, 22250-040, BR
           </p>
-          <p style="color: white">© 2022 Uprisehr Desenvolvimento Humano</p>
+          <p style="color: white">© 2024 Uprisehr Desenvolvimento Humano</p>
         </div>
       </div>
     </div>
