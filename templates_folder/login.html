@@ -2,10 +2,21 @@
 
 {% block title %}Uprise - Login{% endblock %}
 
+{% block links %}
+<style>
+
+.content {
+    background-color: rgb(255, 105, 0);
+    padding: 50px 0;
+}
+
+</style>
+{% endblock %}
+
 {% block entrar_ativo %}active{% endblock %}
 
 {% block content %}
-<div class="container col-lg-5">
+<div class="container col-lg-5 text-white">
     <h3 class="text-center my-5">Entrar</h3>
     <form action="/login" method="post">
         <div class="my-3">
@@ -18,7 +29,7 @@
         </div>
         {{ erro|safe }}
         <div class="my-3">
-            <button type="submit" class="btn btn-outline-primary">Entrar</button>
+            <button type="submit" class="btn btn-primary">Entrar</button>
         </div>
     </form>
 </div>
