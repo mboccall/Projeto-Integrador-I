@@ -3,44 +3,39 @@
 {% block title %}Uprise - Registrar{% endblock %}
 
 {% block links %}
-<style>
-
-.content {
-    background-color: rgb(255, 105, 0);
-    padding: 50px 0;
-}
-
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='login_e_registro/css/style.css') }}">
 {% endblock %}
 
 {% block cadastrar_ativo %}active{% endblock %}
 
 {% block content %}
-<div class="container col-lg-5 text-white">
-    <h3 class="text-center my-5">Cadastre um novo usuário</h3>
-    <form action="/register" method="post">
-        <div class="row my-3">
-            <div class="col-6">
-                <label for="name" class="form-label">Nome:</label>
-                <input type="text" class="form-control" placeholder="Digite seu nome." name="name" required>
+<div class="container col-lg-5">
+    <div class="card p-5">
+        <h3 class="text-center">Cadastre um novo usuário</h3>
+        <form action="/register" method="post">
+            <div class="row my-3">
+                <div class="col-6">
+                    <label for="name" class="form-label">Nome:</label>
+                    <input type="text" class="form-control" placeholder="Digite seu nome." name="name" required>
+                </div>
+                <div class="col-6">
+                    <label for="lastname" class="form-label">Sobrenome:</label>
+                    <input type="text" class="form-control" placeholder="Digite seu sobrenome." name="lastname" required>
+                </div>
             </div>
-            <div class="col-6">
-                <label for="lastname" class="form-label">Sobrenome:</label>
-                <input type="text" class="form-control" placeholder="Digite seu sobrenome." name="lastname" required>
+            <div class="my-3">
+                <label for="email" class="form-label">E-mail:</label>
+                <input type="email" class="form-control" placeholder="Digite seu e-mail." name="email" required>
             </div>
-        </div>
-        <div class="my-3">
-            <label for="email" class="form-label">E-mail:</label>
-            <input type="email" class="form-control" placeholder="Digite seu e-mail." name="email" required>
-        </div>
-        <div class="my-3">
-            <label for="senha" class="form-label">Senha</label>
-            <input type="password" class="form-control" name="senha" placeholder="Digite sua senha." required>
-        </div>
-        {{ erro|safe }}
-        <div class="my-3">
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
-        </div>
-    </form>
+            <div class="my-3">
+                <label for="senha" class="form-label">Senha</label>
+                <input type="password" class="form-control" name="senha" placeholder="Digite sua senha." required>
+            </div>
+            {{ erro|safe }}
+            <div class="my-3">
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}
