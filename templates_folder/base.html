@@ -25,33 +25,33 @@
       <div>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item">
+            <li class="nav-item text-center">
               <a class="nav-link" href="https://uprisehr.com.br/">Início</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item text-center">
               <a class="nav-link" href="https://uprisehr.com.br/spac">SPAC</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item text-center">
               <a class="nav-link" href="https://uprisehr.com.br/e-books">E-books</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item text-center">
               <a class="nav-link" href="https://uprisehr.com.br/blog">Blog</a>
             </li>
-            <li>
+            <li class="nav-item text-center">
                 <a class="nav-link {% block consultoria_ativa %}{% endblock %}" href="{{url_for('index')}}">Consultoria</a>
             </li>
             {% if current_user.is_authenticated %}
-            <li>
+            <li class="nav-item text-center">
                 <a href="{{url_for('consultar_clientes')}}" class="nav-link {% block clientes_ativo %}{% endblock %}">Clientes</a>
             </li>
-            <li>
+            <li class="nav-item text-center">
               <a href="{{url_for('register')}}" class="nav-link {% block cadastrar_ativo %}{% endblock %}">Cadastrar</a>
             </li>
-            <li>
+            <li class="nav-item text-center">
               <a href="{{url_for('logout')}}" class="nav-link">Sair</a>
             </li>
             {% else %}
-            <li>
+            <li class="nav-item text-center">
               <a href="{{url_for('login')}}" class="nav-link {% block entrar_ativo %}{% endblock %}">Entrar</a>
             </li>
             {% endif %}
