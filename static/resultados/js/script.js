@@ -85,49 +85,4 @@ function excluirCliente(id) {
 }
 
 
-// Função para extrair os dados da tabela e salvar como JSON
-document.getElementById('exportButton').addEventListener('click', function () {
-    let tableData = [];
-    const tableRows = document.querySelectorAll('tbody tr');
-
-    tableRows.forEach(row => {
-        const rowData = {
-            ID: row.cells[0].textContent.trim(),
-            Nome: row.cells[1].textContent.trim(),
-            Sobrenome: row.cells[2].textContent.trim(),
-            Email: row.cells[3].textContent.trim(),
-            Telefone: row.cells[4].textContent.trim(),
-            Empresa: row.cells[5].textContent.trim(),
-            Status: row.cells[6].textContent.trim()
-        };
-        tableData.push(rowData);
-    });
-
-    // Cria o JSON stringificado
-    const json = JSON.stringify(tableData, null, 2);
-
-    // Cria um Blob com os dados JSON
-    const blob = new Blob([json], { type: 'application/json' });
-
-    // Cria um link temporário para download
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'dados_tabela.json';
-
-    // Adiciona o link ao documento e clica nele para download
-    document.body.appendChild(link);
-    link.click();
-
-    // Remove o link temporário do documento
-    document.body.removeChild(link);
-});
-
-// Funções fictícias para editar e excluir (para manter o HTML funcional)
-function editarCliente(id) {
-    alert('Editar cliente com ID: ' + id);
-}
-
-function excluirCliente(id) {
-    alert('Excluir cliente com ID: ' + id);
-}
  
