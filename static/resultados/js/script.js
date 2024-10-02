@@ -85,4 +85,52 @@ function excluirCliente(id) {
 }
 
 
- 
+// Função para exportar a tabela para um arquivo JSON
+document.getElementById('exportButton').addEventListener('click', function () {
+  const table = document.querySelector('table tbody');
+  const rows = table.querySelectorAll('tr');
+  
+  // Array para armazenar os dados extraídos
+  const data = [];
+
+  // Percorrer as linhas da tabela
+  rows.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    
+    // Criar um objeto para cada linha
+    const rowData = {
+      ID: cells[0].innerText,
+      Nome: cells[1].innerText,
+      Sobrenome: cells[2].innerText,
+      Email: cells[3].innerText,
+      Telefone: cells[4].innerText,
+      Empresa: cells[5].innerText,
+      Status_do_Checkbox: cells[6].innerText
+    };
+
+    data.push(rowData); // Adicionar o objeto ao array de dados
+  });
+
+  // Converter os dados para formato JSON
+  const json = JSON.stringify(data, null, 2);
+  
+  // Criar um blob para o JSON e disparar o download
+  const blob = new Blob([json], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'dados_tabela.json';
+  link.click();
+});
+
+// Funções fictícias para edição e exclusão de clientes
+function editarCliente(id) {
+  alert(`Editar cliente com ID: ${id}`);
+}
+
+function excluirCliente(id) {
+  alert(`Excluir cliente com ID: ${id}`);
+}
+
+
+
+
